@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+
+    view:
+        build:
+            context: .
+            dockerfile: web/Dockerfile
+        volumes:
+            - '.view:/view'
+            - '/view/node_modules'
+        ports:
+            - '8081:8080'
+        networks:
+            - microservices
+
+    web-app:
+        build:
+            context: .
+            dockerfile: web/Dockerfile
+        image: web-app
+        networks:
+            - microservices
+        ports:
+            - "5000:5000"
+
+    statistic-service:
+        build:
+            context: .
+            dockerfile: statistic/Dockerfile
+        image: statistic-service
+        networks:
+            - microservices
+
+networks:
+    microservices:

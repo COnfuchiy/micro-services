@@ -1,0 +1,4 @@
+grpcio-tools ~= 1.51.1
+pandas~=1.5.2
+numpy~=1.24.1
+python-dateutil~=2.8.2

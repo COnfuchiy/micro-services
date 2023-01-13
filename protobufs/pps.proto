@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+enum StatisticTypes{
+  AGE_AVERAGE = 0;
+  EXPERIENCE_AVERAGE = 1;
+  POSITION_COUNT = 2;
+  EMPLOYMENT_COUNT = 3;
+  ACADEMIC_STATISTIC = 4;
+  SIGNIFICANT_PUBLICATIONS_STATISTIC = 5;
+  OTHER_PUBLICATIONS_STATISTIC = 6;
+  EXTRABUDGETARY_FUNDS_STATISTIC = 7;
+}
+
+message TotalStatisticRequest{
+  repeated StatisticTypes statistic_types = 1;
+}
+
+message FacultiesListRequest{
+
+}
+
+message FacultyStatisticRequest{
+  string faculty_name = 1;
+  repeated StatisticTypes statistic_types = 2;
+}
+
+message ChairsListRequest{
+  string faculty_name = 1;
+}
+
+message ChairStatisticRequest{
+  string faculty_name = 1;
+  string chair_name = 2;
+  repeated StatisticTypes statistic_types = 3;
+}
+
+message CountStatistic{
+  string name = 1;
+  float count = 2;
+}
+
+message AverageStatistic{
+  string name = 1;
+  float average = 2;
+}
+
+message StatisticResponse{
+  string faculty_name = 1;
+  string chair_name = 2;
+  int32 employee_count = 3;
+  optional int32 age_average = 4;
+  optional int32 experience_average = 5;
+  repeated CountStatistic positions = 6;
+  repeated CountStatistic employments = 7;
+  repeated CountStatistic academic_degrees = 8;
+  repeated CountStatistic academic_titles = 9;
+  repeated CountStatistic significant_publications = 10;
+  repeated AverageStatistic significant_publications_average = 11;
+  repeated CountStatistic other_publications = 12;
+  repeated AverageStatistic other_publications_average = 13;
+  repeated CountStatistic extrabudgetary_funds = 14;
+  repeated AverageStatistic extrabudgetary_funds_average = 15;
+}
+
+message FacultiesListResponse{
+  repeated string faculties = 1;
+}
+
+message ChairsListResponse{
+  string faculty_name = 1;
+  repeated string chairs = 2;
+}
+
+service PpsStatistic {
+  rpc TotalStatistic (TotalStatisticRequest) returns (StatisticResponse);
+  rpc FacultiesList (FacultiesListRequest) returns (FacultiesListResponse);
+  rpc FacultyStatistic (FacultyStatisticRequest) returns (StatisticResponse);
+  rpc ChairsList (ChairsListRequest) returns (ChairsListResponse);
+  rpc ChairStatistic (ChairStatisticRequest) returns (StatisticResponse);
+}
